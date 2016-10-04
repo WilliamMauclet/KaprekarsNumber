@@ -7,7 +7,7 @@ Code sample:
 >>> import kaprekar
 >>> initialMapping = kaprekar.createFirstMapping(4)
 >>> initialMapping.performMapping()
->>> printMapping(initialMapping)
+>>> kaprekar.printMapping(initialMapping)
 ```
 
 
