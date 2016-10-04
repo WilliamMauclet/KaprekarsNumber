@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, prototypemapping, mappingsprinter
+import sys, prototypemapping, mappingsprinter, treebuilder
 
 def initPrototypes(digitsNr):
 	prototypes = set()
@@ -31,12 +31,14 @@ def printMapping(prototypeMapping):
 	mappingsPrinter = mappingsprinter.MappingsPrinter(prototypeMapping.getNumberOfDigits())
 	mappingsPrinter.printMappings(prototypeMapping)
 
-	
-	
-# first = createFirstMapping(4)
-# first.performMapping()
-# printMapping(first)
 
+	
+	
+first = createFirstMapping(2)
+first.performMapping()
+printMapping(first)
+
+tree = treebuilder.buildTree(first)
 
 
 
