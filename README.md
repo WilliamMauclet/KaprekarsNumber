@@ -1,6 +1,15 @@
 # KaprekarsNumber
 Little project to learn Python and calculate Kaprekar's numbers for any amount of digits.
 
+
+Code sample: 
+```python
+initialMapping = createFirstMapping(4)
+initialMapping.performMapping()
+printMapping(initialMapping)
+```
+
+
 Structure:
 
 KaprekarsNumber/
