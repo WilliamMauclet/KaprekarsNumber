@@ -2,110 +2,115 @@
 
 import sys
 
-digitsNr = 	int(raw_input('Please choose how many digits you want: '))
-
-def initPrototypes():
+def initPrototypes(digitsNr):
 	prototypes = set()
 	
-	global digitsNr
 	prototypesNr = (10**digitsNr)-1
 	
 	for counter in range(0, prototypesNr):
-		prototypes.add(numberToSortedString(counter))
+		prototypes.add(numberToSortedString(digitsNr)(counter))
 		
 	return sorted(list(prototypes))
 
-def numberToSortedString(number):
-	numberString = sortString(str(number), True)
-	while len(numberString) < digitsNr:
-		numberString = '0' + numberString
-	return numberString
+def numberToSortedString(digitsNr):
+	def numberToSortedFixedDigitsString(number): 
+		numberString = sortString(str(number), True)
+		while len(numberString) < digitsNr:
+			numberString = '0' + numberString
+		return numberString
+	return numberToSortedFixedDigitsString
 
 def sortString(given, incrNotDecr):
 	return ''.join(sorted(given,reverse=not(incrNotDecr)))
 	
-def printPrototypes(prototypes):
-	global f
-	f.write('------PROTOTYPES---------\n')
-	f.write('length: ' + str(len(prototypes)) + '\n')
+def printPrototypes(fileWriter, prototypes):
+	fileWriter.write('------PROTOTYPES---------\n')
+	fileWriter.write('length: ' + str(len(prototypes)) + '\n')
 	for proto in prototypes:
-		f.write(proto + '\n')
-		
-			
-def printMappings(nextPrototypeMaps):
-	global f, previousNumberOfPrototypes, numberOfPrototypes, iterationsCount
-	previousNumberOfPrototypes = numberOfPrototypes
-	numberOfPrototypes = countImageCardinality(nextPrototypeMaps)
+		fileWriter.write(proto + '\n')
 
-	printNewMapping(numberOfPrototypes, nextPrototypeMaps)
+def printMappings(prototypeMapping):
+	previousNumberOfPrototypes = prototypeMapping.numberOfPrototypes
+	numberOfPrototypes = prototypeMapping.countUniqueTargets()
+	
+	printNewMapping()
 
 	if(numberOfPrototypes == previousNumberOfPrototypes):
 		printFinalText()
-		return
-	iterationsCount += 1
+
+def printNewMapping(fileWriter, prototypeMaps):
+	fileWriter.write('\n------------------NEW MAP---------------\n')	
+	fileWriter.write('size image: ' + str(len(set(x[1] for x in self.prototypeMaps))) + '\n')
+	for protoMap in self.prototypeMaps:
+		fileWriter.write(protoMap[0] + ' -> ' + protoMap[1] + '\n')
+
+def printFinalText(self, fileWriter, digitsNr, iterationCount):
+	fileWriter.write('\n------------------DONE---------------\n')
+	fileWriter.write('Number of iterations for a Kaprekar number with ' + str(digitsNr) + ' digits is: ' + str(self.iterationCount))
+	fileWriter.write('\n')
+	fileWriter.close()
 	
-def printNewMapping(numberOfPrototypes, nextPrototypeMaps):
-	f.write('\n------------------NEW MAP---------------\n')	
-	f.write('size image: ' + str(numberOfPrototypes) + '\n')
-	for protoMap in nextPrototypeMaps:
-		f.write(protoMap[0] + ' -> ' + protoMap[1] + '\n')
+####################################### PrototypeMapping class ############################
+## The iterations are represented by objects, which contains the mappings of the iteration. These objects form a linked 
+## list, with each element pointing towards its successor. This reduces memory usage and makes it easier to subsequently
+## visualise the mappings.
+
+class PrototypeMapping:
+	def __init__(self, previousMapping = None, initPrototypes = None, numberToSortedString = None):
+		if(previousMapping == None):
+			self.iterationCount = 1
+			self.previousPrototypeMaps = []
+			for proto in initPrototypes:
+				self.previousPrototypeMaps.append((None, proto))
+			self.numberToSortedString = numberToSortedString
+		else:			
+			self.iterationCount = previousMapping.iterationCount + 1
+			self.previousPrototypeMaps = previousMapping.prototypeMaps
+			self.numberToSortedString = previousMapping.numberToSortedString
+
+	def performMapping(self):
+		sources = self.getSortedTargets(self.previousPrototypeMaps)
+		self.prototypeMaps = [(prototype, self.calculateTarget(prototype)) for prototype in sources]
+		self.prototypeMaps.sort(lambda x,y: cmp(x[1], y[1])) 
+		if self.countUniqueTargets(self.prototypeMaps) != self.countUniqueTargets(self.previousPrototypeMaps):
+			self.propagateMapping()
 		
-def printFinalText():
-	global f, iterationsCount, digitsNr
-	f.write('\n------------------DONE---------------\n')
-	f.write('Number of iterations for a Kaprekar number with ' + str(digitsNr) + ' digits is: ' + str(iterationsCount))
-	f.write('\n')
-	f.close()
-	
-def makeCalculation(prototype):
-	high = sortString(prototype, False)
-	low = sortString(prototype, True)
-	result = int(high)-int(low)
-	return numberToSortedString(result)
-
-def countImageCardinality(prototypeMaps):
-	imageProtos = set()
-	for protoMap in prototypeMaps:
-		imageProtos.add(protoMap[1])
-	return len(imageProtos)
-
-def performMapping():
-	global nextPrototypeMaps
-	prototypeMaps = makeNewList(nextPrototypeMaps)
-	nextPrototypeMaps = []
-
-	for prototype in prototypeMaps:
-		nextPrototypeMaps.append((prototype, makeCalculation(prototype)))
+	def getSortedTargets(self, prototypeMaps):
+		return sorted(list(set([protoMap[1] for protoMap in prototypeMaps])))
 		
-	nextPrototypeMaps.sort(lambda x,y: cmp(x[1], y[1])) 
-
-	printMappings(nextPrototypeMaps)
+	def calculateTarget(self, prototype):
+		high = sortString(prototype, False)
+		low = sortString(prototype, True)
+		result = int(high)-int(low)
+		return self.numberToSortedString(result)
 	
-def makeNewList(prototypeMaps):
-	return sorted(list(set([protoMap[1] for protoMap in prototypeMaps])))
-	
+	def countUniqueTargets(self, prototypeMaps):
+		return len(set(x[1] for x in prototypeMaps))
+		
+	def propagateMapping(self):
+		self.successor = PrototypeMapping(self)
+		self.successor.performMapping()
+		
 	
 ####################################### FLOW #########################
 
-prototypes = initPrototypes()
-		
-f = open(str(digitsNr) + '-Digits-Prototypes.txt', 'w')
-printPrototypes(prototypes)
+# digitsNr = 	int(raw_input('Please choose how many digits you want: '))
+
+# prototypes = initPrototypes(digitsNr)
+
+
+# fileWriter = open(str(digitsNr) + '-Digits-Prototypes.txt', 'w')
+# printPrototypes(fileWriter, prototypes)
 	
-#Now calculate mappings breadth-first	
-nextPrototypeMaps = []
-for proto in prototypes:
-	nextPrototypeMaps.append((None, proto))
 
 # hasta quel numero de grupos sigue el mismo
-previousNumberOfPrototypes = 9999999999
-numberOfPrototypes = 1999999
-iterationsCount = 0
-while previousNumberOfPrototypes != numberOfPrototypes:
-	performMapping()
-
-
-
+# previousNumberOfPrototypes = 9999999999
+# numberOfPrototypes = 1999999
+# iterationsCount = 0
+# while previousNumberOfPrototypes != numberOfPrototypes:
+	# performMapping()
+	# printMappings()?
+	
 
 	
 
