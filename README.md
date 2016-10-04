@@ -12,7 +12,7 @@ Code sample:
 
 
 Structure:
-
+<pre>
 KaprekarsNumber/
 |- src
 |    |- kaprekar.py
@@ -20,3 +20,4 @@ KaprekarsNumber/
 |
 |- README.md
 |- LICENSE
+</pre>
