@@ -4,9 +4,10 @@ Little project to learn Python and calculate Kaprekar's numbers for any amount o
 
 Code sample: 
 ```python
-initialMapping = createFirstMapping(4)
-initialMapping.performMapping()
-printMapping(initialMapping)
+>>> import kaprekar
+>>> initialMapping = kaprekar.createFirstMapping(4)
+>>> initialMapping.performMapping()
+>>> printMapping(initialMapping)
 ```
 
 
