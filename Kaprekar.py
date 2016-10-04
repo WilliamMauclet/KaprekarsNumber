@@ -44,7 +44,7 @@ def printMappings(nextPrototypeMaps):
 		return
 	iterationsCount += 1
 	
-def printNewMapping():
+def printNewMapping(numberOfPrototypes, nextPrototypeMaps):
 	f.write('\n------------------NEW MAP---------------\n')	
 	f.write('size image: ' + str(numberOfPrototypes) + '\n')
 	for protoMap in nextPrototypeMaps:
