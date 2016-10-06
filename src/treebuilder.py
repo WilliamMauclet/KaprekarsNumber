@@ -28,6 +28,7 @@ def growTree(prototypeMapping, tree):
 				newTree[protoMap[1]].append([protoMap[0], payload])
 		return growTree(prototypeMapping.successor, newTree)
 	else:
+		tree["loops"] = prototypeMapping.loops
 		return tree
 
 
