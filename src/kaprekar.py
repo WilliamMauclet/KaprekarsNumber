@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, prototypemapping, mappingsprinter, treebuilder
+import sys, prototypemapping, mappingsprinter, treebuilder, treedrawer
 
 def initPrototypes(digitsNr):
 	prototypes = set()
@@ -39,8 +39,5 @@ first.performMapping()
 printMapping(first)
 
 tree = treebuilder.buildTree(first)
-
-
-
-
+treedrawer.drawTree(tree)
 	
