@@ -24,6 +24,9 @@ KaprekarsNumber/
 |- src
 |    |- kaprekar.py
 |    |- prototypemapping.py
+|    |- mappingsprinter.py
+|    |- treebuilder.py
+|    |- treedrawer.py
 |
 |- README.md
 |- LICENSE
