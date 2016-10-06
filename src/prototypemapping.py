@@ -26,6 +26,8 @@ class PrototypeMapping:
 		self.prototypeMaps.sort(lambda x,y: cmp(x[1], y[1])) 
 		if self.countUniqueTargets(self.prototypeMaps) != self.countUniqueTargets(self.previousPrototypeMaps):
 			self.propagateMapping()
+		else:
+			self.findLoops()
 		
 	def getSortedTargets(self, prototypeMaps):
 		return sorted(list(set([protoMap[1] for protoMap in prototypeMaps])))
@@ -49,3 +51,32 @@ class PrototypeMapping:
 	def getNumberOfDigits(self):
 		"""Hack, but it always works."""
 		return len(self.previousPrototypeMaps[0][1])
+		
+	def findLoops(self):
+		self.loops = []
+		sources = set(x[0] for x in self.prototypeMaps)
+		
+		while len(sources) > 0:
+			loopSet = self.findLoopFor(sources.pop())
+			sources -= loopSet
+			self.loops.append(list(loopSet))
+		
+	def findLoopFor(self, origin):
+		loop = set([origin])
+		next = self.calculateTarget(origin)
+		while next != origin:
+			loop.add(next)
+			next = self.calculateTarget(next)
+		return loop
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
