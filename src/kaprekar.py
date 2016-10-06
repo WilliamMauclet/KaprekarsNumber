@@ -30,15 +30,17 @@ def createFirstMapping(digitsNr):
 def printMapping(prototypeMapping):
 	mappingsPrinter = mappingsprinter.MappingsPrinter(prototypeMapping.getNumberOfDigits())
 	mappingsPrinter.printMappings(prototypeMapping)
-
+	
+def drawMapping(prototypeMapping):
+	tree = treebuilder.buildTree(prototypeMapping)
+	treedrawer.drawTree(tree)
 
 	
 def demo():	
-	first = createFirstMapping(2)
-	first.performMapping()
-	printMapping(first)
+	demoMapping = createFirstMapping(2)
+	demoMapping.performMapping()
+	printMapping(demoMapping)
 
-	tree = treebuilder.buildTree(first)
-	treedrawer.drawTree(tree)
+	drawMapping(demoMapping)
 		
 	raw_input()
