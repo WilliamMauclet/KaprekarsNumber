@@ -33,11 +33,12 @@ def printMapping(prototypeMapping):
 
 
 	
-	
-first = createFirstMapping(2)
-first.performMapping()
-printMapping(first)
+def demo():	
+	first = createFirstMapping(2)
+	first.performMapping()
+	printMapping(first)
 
-tree = treebuilder.buildTree(first)
-treedrawer.drawTree(tree)
-	
+	tree = treebuilder.buildTree(first)
+	treedrawer.drawTree(tree)
+		
+	raw_input()

@@ -5,14 +5,22 @@ Little project to learn Python and calculate Kaprekar's numbers for any amount o
 Code sample: 
 ```python
 >>> import kaprekar
->>> initialMapping = kaprekar.createFirstMapping(4)
->>> initialMapping.performMapping()
->>> kaprekar.printMapping(initialMapping)
+>>> mapping = kaprekar.createFirstMapping(4)
+>>> mapping.performMapping()
+>>> kaprekar.printMapping(mapping)
+>>> kaprekar.drawMapping(mapping)
 ```
 
+... or, more simply:
+
+```python
+>>> from kaprekar import *
+>>> demo()
+```
 
 Structure:
 
+```
 KaprekarsNumber/
 |- src
 |    |- kaprekar.py
@@ -20,3 +28,4 @@ KaprekarsNumber/
 |
 |- README.md
 |- LICENSE
+```
