@@ -2,20 +2,20 @@
 Little project to learn Python and calculate Kaprekar's numbers for any amount of digits.
 
 
-Code sample: 
-```python
->>> import kaprekar
->>> mapping = kaprekar.createFirstMapping(4)
->>> mapping.performMapping()
->>> kaprekar.printMapping(mapping)
->>> kaprekar.drawMapping(mapping)
-```
-
-... or, more simply:
+Code sample (go to src/ and open the python interpreter): 
 
 ```python
 >>> from kaprekar import *
 >>> demo()
+```
+
+... or, more elaborately:
+
+```python
+>>> import kaprekar
+>>> mapping = kaprekar.createMapping(4)
+>>> kaprekar.printMapping(mapping)
+>>> kaprekar.drawMapping(mapping)
 ```
 
 Structure:

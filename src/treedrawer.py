@@ -19,7 +19,7 @@ def drawTree(tree):
 	
 	i = 0
 	for key in tree:
-		rootPosition = (20, -300 + i*120)
+		rootPosition = (200*i,  i*1000)
 		rootPositions[key] = rootPosition
 		myTree = [key, tree[key]]
 		drawMyTree(myTree, rootPosition, 1)
@@ -29,30 +29,30 @@ def drawTree(tree):
 	up()
 
 def cntstrs(list):
-    return len([item for item in list if type(item) is StringType])
+	return len([item for item in list if type(item) is StringType])
+	
 def drawMyTree(tree, pos, head=0):
-    c = cntstrs(tree)
-    while len(tree):
-	goto(pos)
-	item = tree.pop(0)
-	if head:
-	    write(item,1)
-	    drawMyTree(tree.pop(0),pos)
-	else:
-	    if type(item) is StringType:
-		newpos = (pos[0] + s*c/4 - s*cntstrs(tree), pos[1] - s)
-		down()
-		goto((newpos[0], newpos[1] + 15))
-		up()
-		goto(newpos)
-		write(item,1)
-	    elif type(item) is ListType:
-		drawMyTree(item,newpos)
+	c = cntstrs(tree)
+	while len(tree):
+		goto(pos)
+		item = tree.pop(0)
+		if head:
+			write(item,1)
+			drawMyTree(tree.pop(0),pos)
+		else:
+			if type(item) is StringType:
+				newpos = (pos[0] + s*c/4 - s*cntstrs(tree), pos[1] - s)
+				down()
+				goto((newpos[0], newpos[1] + 15))
+				up()
+				goto(newpos)
+				write(item,1)
+			elif type(item) is ListType:
+				drawMyTree(item,newpos)
 		
 def drawLoops(loops):
 	for loop in loops:
 		for i in range(len(loop)):
-			print("from " + str(loop[i]) + " towards " + str(loop[(i+1)%len(loop)]) + "\n")
 			drawArc(rootPositions[loop[i]], rootPositions[loop[(i+1)%len(loop)]])
 			
 def drawArc(posOne, posTwo):

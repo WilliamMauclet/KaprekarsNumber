@@ -23,7 +23,7 @@ def growTree(prototypeMapping, tree):
 		for protoMap in prototypeMapping.prototypeMaps:
 			payload = tree[protoMap[0]]
 			if protoMap[1] not in newTree:
-				newTree[protoMap[1]] = [[protoMap[0], payload]]
+				newTree[protoMap[1]] = [protoMap[0], payload]
 			else:
 				newTree[protoMap[1]].append([protoMap[0], payload])
 		return growTree(prototypeMapping.successor, newTree)

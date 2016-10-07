@@ -12,13 +12,14 @@ class PrototypeMapping:
 			self.iterationCount = previousMapping.iterationCount + 1
 			self.previousPrototypeMaps = previousMapping.prototypeMaps
 			self.numberToSortedString = previousMapping.numberToSortedString
-			
+		
 	def initFirstMapping(self, initPrototypes, numberToSortedString):
 		self.iterationCount = 1
 		self.previousPrototypeMaps = []
 		for proto in initPrototypes:
 			self.previousPrototypeMaps.append((None, proto))
 		self.numberToSortedString = numberToSortedString
+		self.performMapping()
 
 	def performMapping(self):
 		sources = self.getSortedTargets(self.previousPrototypeMaps)
@@ -49,7 +50,7 @@ class PrototypeMapping:
 		self.successor.performMapping()
 	
 	def getNumberOfDigits(self):
-		"""Hack, but it always works."""
+		"""A bit hacky, but it always works."""
 		return len(self.previousPrototypeMaps[0][1])
 		
 	def findLoops(self):

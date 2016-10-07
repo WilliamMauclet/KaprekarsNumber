@@ -24,7 +24,7 @@ def sortString(given, incrNotDecr):
 	return ''.join(sorted(given,reverse=not(incrNotDecr)))
 	
 
-def createFirstMapping(digitsNr):
+def createMapping(digitsNr):
 	return prototypemapping.PrototypeMapping(None, initPrototypes(digitsNr), numberToSortedString(digitsNr))
 
 def printMapping(prototypeMapping):
@@ -36,9 +36,8 @@ def drawMapping(prototypeMapping):
 	treedrawer.drawTree(tree)
 
 	
-def demo():	
-	demoMapping = createFirstMapping(2)
-	demoMapping.performMapping()
+def demo(digitsNr = 2):	
+	demoMapping = createMapping(digitsNr)
 	printMapping(demoMapping)
 
 	drawMapping(demoMapping)
